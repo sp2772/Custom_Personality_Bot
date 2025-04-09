@@ -4,6 +4,8 @@ A tested personality for this chatbot is a tsundere, a character archetype that 
 💡 Overview
 This repo provides a framework for developing character-driven chatbots powered by fine-tuned models. Whether you're building a flirtatious anime companion or a formal assistant, you can create a bot that speaks in a specific tone, personality, or communication style using structured dialogue datasets.
 
+
+
 📁 Project Structure
 Below are the key files included in this repository:
 
@@ -43,6 +45,9 @@ Aisha_NekronV2.py: Another character implementation with its own trained model.
 
 download_lang_model.py: Utility for downloading tokenizer and language models.
 
+
+
+
 🚀 How to Use
 Prepare Data
 Use tsundere.py or your own dataset. Convert it to CSV using convert_to_csv.py.
@@ -63,6 +68,10 @@ Use chat_bot.py or dynamic_chatbot.py to chat with the bot interactively.
 Deploy a Personality
 Create a deployment script like Shirayuki_Himeji_V2.py to load your fine-tuned model and start a custom session.
 
+
+
+
+
 🔧 Requirements
 Python 3.8+
 
@@ -76,10 +85,16 @@ tqdm
 
 Google Translate API (optional)
 
+
+
+
 Install dependencies:
 
 in bash:
 pip install -r requirements.txt
+
+
+
 
 📌 Notes
 Keep your dataset consistent with the (user, bot_response) format.

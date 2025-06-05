@@ -1,8 +1,18 @@
 # Custom_Personality_Bot
 A tested personality for this chatbot is a tsundere, a character archetype that flips between cold and warm behavior. This project enables the training and deployment of custom personality-based chatbots using conversation datasets and fine-tuned language models.
 
+
+
+
+
 💡 Overview
 This repo provides a framework for developing character-driven chatbots powered by fine-tuned models. Whether you're building a flirtatious anime companion or a formal assistant, you can create a bot that speaks in a specific tone, personality, or communication style using structured dialogue datasets.
+
+
+
+
+
+
 
 
 
@@ -48,6 +58,11 @@ download_lang_model.py: Utility for downloading tokenizer and language models.
 
 
 
+
+
+
+
+
 🚀 How to Use
 Prepare Data
 Use tsundere.py or your own dataset. Convert it to CSV using convert_to_csv.py.
@@ -72,6 +87,10 @@ Create a deployment script like Shirayuki_Himeji_V2.py to load your fine-tuned m
 
 
 
+
+
+
+
 🔧 Requirements
 Python 3.8+
 
@@ -84,6 +103,10 @@ pandas, numpy
 tqdm
 
 Google Translate API (optional)
+
+
+
+
 
 
 

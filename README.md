@@ -9,6 +9,9 @@ ________________________________________________________________________________
 💡 Overview
 This repo provides a framework for developing character-driven chatbots powered by fine-tuned models. Whether you're building a flirtatious anime companion or a formal assistant, you can create a bot that speaks in a specific tone, personality, or communication style using structured dialogue datasets.
 
+Models used:
+https://huggingface.co/facebook/opt-350m
+https://huggingface.co/openai-community/gpt2
 
 ____________________________________________________________________________________________________________________________________________________________________________________________________________________
 

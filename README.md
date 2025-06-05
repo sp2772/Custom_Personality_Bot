@@ -56,7 +56,7 @@ Aisha_NekronV2.py: Another character implementation with its own trained model.
 
 download_lang_model.py: Utility for downloading tokenizer and language models.
 
-
+whatsapp_bot.py: A demonstration to release the bot in whatsapp.
 
 
 

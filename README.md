@@ -1,5 +1,5 @@
 # Custom_Personality_Bot
-A tested personality for this chatbot is a tsundere, a character archetype that flips between cold and warm behavior. This project enables the training and deployment of custom personality-based chatbots using conversation datasets and fine-tuned language models.
+A tested personality for this chatbot is a tsundere, a character archetype that flips between cold and warm behavior, always acts opposite to internal feelings, does unhonest denials and gets embarrassed easily. This project enables the training and deployment of custom personality-based chatbots using conversation datasets and fine-tuned language models.
 
 
 ____________________________________________________________________________________________________________________________________________________________________________________________________________________

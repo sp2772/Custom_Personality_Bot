@@ -3,12 +3,32 @@ import requests
 import json
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
+import re
 import time
 
+def input_clean_func(input_string):
+    
+    # Regular expression to match Discord mentions format: <@numbers>
+    mention_pattern = r'<@\d+>'
+    # Replace all occurrences of the pattern with "them"
+    cleaned_input = re.sub(mention_pattern, "them", input_string)
+    
+    return cleaned_input
+
+def input_clean_func(input_string):
+    
+    # Regular expression to match Discord mentions format: <@numbers>
+    mention_pattern = r'<@\d+>'
+    # Replace all occurrences of the pattern with "them"
+    cleaned_input = re.sub(mention_pattern, "them", input_string)
+    
+    return cleaned_input
+
+# Uncomment the following lines to create or connect to a file for storing inputs
 # with open("inputs_for_shirayuki.txt", 'a') as f:
 #     print("question file created/connected to!")
 
-def load_chatbot(model_path="./fine_tuned_ShirayukiV3_OPT"):
+def load_chatbot(model_path="./fine_tuned_ShirayukiV4_OPT"):
     tokenizer = AutoTokenizer.from_pretrained(model_path)
     model = AutoModelForCausalLM.from_pretrained(model_path)
     return model, tokenizer
@@ -127,7 +147,7 @@ async def on_message(message):
     - Lower values (close to `0.1`) make responses more deterministic, while higher values (up to `2.0`) make them more creative.  
     - Range: `0.1 to 2.0`  
     - Example: `%settemp 1.2`  
-
+ 3
     4. **Setting top-p (nucleus sampling)** (`%settopp`)  
     - Limits token selection to a probability mass (`p`).  
     - Higher values (`0.9-1.0`) allow more diverse outputs, lower values (`0.1-0.5`) make responses more focused.  
@@ -149,69 +169,73 @@ async def on_message(message):
     elif message.content.strip().startswith('%view'):
         await message.channel.send("My Current max gen length:"+str(max_seq[-1])+"\nTemperature:"+str(temperature[-1])+"\nTop-p:"+str(top_p[-1])+"\nTop-K:"+str(top_k[-1]))
         
-        
+    """all conditions below are for Shirayuki Hime's response generation"""
     elif message.content.strip().startswith('%'):
         print(message.content)
-        her_res = get_Shirayuki_response(model, tokenizer, message.content, max_seq[-1], temperature[-1], top_p[-1], top_k[-1])
+        messagecontent=input_clean_func(message.content)
+        her_res = get_Shirayuki_response(model, tokenizer, messagecontent, max_seq[-1], temperature[-1], top_p[-1], top_k[-1])
         x = '<|endoftext|>' if '<|endoftext|>' in her_res.strip() else '<|endoftext|' if '<|endoftext|' in her_res.strip() else '<|endoftext' if '<|endoftext' in her_res.strip() else '<|endoftex' if '<|endoftex' in her_res.strip() else '<|endofte' if '<|endofte' in her_res.strip() else '<|endoft' if '<|endoft' in her_res.strip() else '<|endof' if '<|endof' in her_res.strip() else '<|endo' if '<|endo' in her_res.strip() else '<|end' if '<|end' in her_res.strip() else '<|en' if '<|en' in her_res.strip() else '<|e' if '<|e' in her_res.strip() else '<|' if '<|' in her_res.strip() else '<|endoftext|>'
         msglist = her_res.strip().split(x)
 
+        # Uncomment the following lines to create or connect to a file for storing inputs
         with open("inputs_for_shirayuki.txt", 'a') as f:
-            f.write(message.content[1:].replace('\n', ' ') + '\n')
+            f.write(messagecontent[1:].replace('\n', ' ') + '\n')
+            
+            
         if len(msglist[0])>6:
-            await message.channel.send(f"\n<response to> {message.content[1:]}\n\nShirayuki Hime: {msglist[0]}")
+            await message.channel.send(f"\n<response to> {messagecontent[1:]}\n\nShirayuki Hime: {msglist[0]}")
         else:
             await message.channel.send("Thinkng....")
             if len(msglist)>1:
                 if len(msglist[1])<6:
-                    her_res = get_Shirayuki_response(model, tokenizer, message.content, max_seq[-1], temperature[-1], top_p[-1], top_k[-1])
+                    her_res = get_Shirayuki_response(model, tokenizer, messagecontent, max_seq[-1], temperature[-1], top_p[-1], top_k[-1])
                     x = '<|endoftext|>' if '<|endoftext|>' in her_res.strip() else '<|endoftext|' if '<|endoftext|' in her_res.strip() else '<|endoftext' if '<|endoftext' in her_res.strip() else '<|endoftex' if '<|endoftex' in her_res.strip() else '<|endofte' if '<|endofte' in her_res.strip() else '<|endoft' if '<|endoft' in her_res.strip() else '<|endof' if '<|endof' in her_res.strip() else '<|endo' if '<|endo' in her_res.strip() else '<|end' if '<|end' in her_res.strip() else '<|en' if '<|en' in her_res.strip() else '<|e' if '<|e' in her_res.strip() else '<|' if '<|' in her_res.strip() else '<|endoftext|>'
                     msglist = her_res.strip().split(x)
                     if len(msglist[0])>6:
-                        await message.channel.send(f"\n<response to> {message.content[1:]}\n\nShirayuki Hime: {msglist[0]}")
+                        await message.channel.send(f"\n<response to> {messagecontent[1:]}\n\nShirayuki Hime: {msglist[0]}")
                     else:
                         await message.channel.send("Thinkng again....")
                         if len(msglist)>1:
                             if len(msglist[1])<6:
-                                her_res = get_Shirayuki_response(model, tokenizer, message.content, max_seq[-1], 1.3, 0.95, 75)
+                                her_res = get_Shirayuki_response(model, tokenizer, messagecontent, max_seq[-1], 1.3, 0.95, 75)
                                 x = '<|endoftext|>' if '<|endoftext|>' in her_res.strip() else '<|endoftext|' if '<|endoftext|' in her_res.strip() else '<|endoftext' if '<|endoftext' in her_res.strip() else '<|endoftex' if '<|endoftex' in her_res.strip() else '<|endofte' if '<|endofte' in her_res.strip() else '<|endoft' if '<|endoft' in her_res.strip() else '<|endof' if '<|endof' in her_res.strip() else '<|endo' if '<|endo' in her_res.strip() else '<|end' if '<|end' in her_res.strip() else '<|en' if '<|en' in her_res.strip() else '<|e' if '<|e' in her_res.strip() else '<|' if '<|' in her_res.strip() else '<|endoftext|>'
                                 msglist = her_res.strip().split(x) 
                                 if  len(msglist[0])>6:
-                                    await message.channel.send(f"\n<response to> {message.content[1:]}\n\nShirayuki Hime: {msglist[0]}")
+                                    await message.channel.send(f"\n<response to> {messagecontent[1:]}\n\nShirayuki Hime: {msglist[0]}")
                                 else:
                                     await message.channel.send("I will think hard to come up with something....")
                                     if len(msglist)>1:
                                         if len(msglist[1])<6:
-                                            her_res = get_Shirayuki_response(model, tokenizer, message.content, max_seq[-1], 2.0, 0.99, 99)
+                                            her_res = get_Shirayuki_response(model, tokenizer, messagecontent, max_seq[-1], 2.0, 0.99, 99)
                                             x = '<|endoftext|>' if '<|endoftext|>' in her_res.strip() else '<|endoftext|' if '<|endoftext|' in her_res.strip() else '<|endoftext' if '<|endoftext' in her_res.strip() else '<|endoftex' if '<|endoftex' in her_res.strip() else '<|endofte' if '<|endofte' in her_res.strip() else '<|endoft' if '<|endoft' in her_res.strip() else '<|endof' if '<|endof' in her_res.strip() else '<|endo' if '<|endo' in her_res.strip() else '<|end' if '<|end' in her_res.strip() else '<|en' if '<|en' in her_res.strip() else '<|e' if '<|e' in her_res.strip() else '<|' if '<|' in her_res.strip() else '<|endoftext|>'
                                             msglist = her_res.strip().split(x) 
                                             
-                                            await message.channel.send(f"\n<response to> {message.content[1:]}\n\nShirayuki Hime: {msglist[0]}")
+                                            await message.channel.send(f"\n<response to> {messagecontent[1:]}\n\nShirayuki Hime: {msglist[0]}")
                                         else:
-                                            await message.channel.send(f"\n<response to> {message.content[1:]}\n\nShirayuki Hime: {msglist[1]}")
+                                            await message.channel.send(f"\n<response to> {messagecontent[1:]}\n\nShirayuki Hime: {msglist[1]}")
                                     else:
-                                        her_res = get_Shirayuki_response(model, tokenizer, message.content, max_seq[-1], 2.0, 0.99, 99)
+                                        her_res = get_Shirayuki_response(model, tokenizer, messagecontent, max_seq[-1], 2.0, 0.99, 99)
                                         x = '<|endoftext|>' if '<|endoftext|>' in her_res.strip() else '<|endoftext|' if '<|endoftext|' in her_res.strip() else '<|endoftext' if '<|endoftext' in her_res.strip() else '<|endoftex' if '<|endoftex' in her_res.strip() else '<|endofte' if '<|endofte' in her_res.strip() else '<|endoft' if '<|endoft' in her_res.strip() else '<|endof' if '<|endof' in her_res.strip() else '<|endo' if '<|endo' in her_res.strip() else '<|end' if '<|end' in her_res.strip() else '<|en' if '<|en' in her_res.strip() else '<|e' if '<|e' in her_res.strip() else '<|' if '<|' in her_res.strip() else '<|endoftext|>'
                                         msglist = her_res.strip().split(x) 
             
-                                        await message.channel.send(f"\n<response to> {message.content[1:]}\n\nShirayuki Hime: {msglist[0]}")
+                                        await message.channel.send(f"\n<response to> {messagecontent[1:]}\n\nShirayuki Hime: {msglist[0]}")
                             else:
-                                await message.channel.send(f"\n<response to> {message.content[1:]}\n\nShirayuki Hime: {msglist[1]}")
+                                await message.channel.send(f"\n<response to> {messagecontent[1:]}\n\nShirayuki Hime: {msglist[1]}")
                         else:
-                            her_res = get_Shirayuki_response(model, tokenizer, message.content, max_seq[-1], 2.0, 0.99, 99)
+                            her_res = get_Shirayuki_response(model, tokenizer, messagecontent, max_seq[-1], 2.0, 0.99, 99)
                             x = '<|endoftext|>' if '<|endoftext|>' in her_res.strip() else '<|endoftext|' if '<|endoftext|' in her_res.strip() else '<|endoftext' if '<|endoftext' in her_res.strip() else '<|endoftex' if '<|endoftex' in her_res.strip() else '<|endofte' if '<|endofte' in her_res.strip() else '<|endoft' if '<|endoft' in her_res.strip() else '<|endof' if '<|endof' in her_res.strip() else '<|endo' if '<|endo' in her_res.strip() else '<|end' if '<|end' in her_res.strip() else '<|en' if '<|en' in her_res.strip() else '<|e' if '<|e' in her_res.strip() else '<|' if '<|' in her_res.strip() else '<|endoftext|>'
                             msglist = her_res.strip().split(x) 
 
-                            await message.channel.send(f"\n<response to> {message.content[1:]}\n\nShirayuki Hime: {msglist[0]}")
+                            await message.channel.send(f"\n<response to> {messagecontent[1:]}\n\nShirayuki Hime: {msglist[0]}")
                 else:
-                    await message.channel.send(f"\n<response to> {message.content[1:]}\n\nShirayuki Hime: {msglist[1]}")
+                    await message.channel.send(f"\n<response to> {messagecontent[1:]}\n\nShirayuki Hime: {msglist[1]}")
             else:
-                her_res = get_Shirayuki_response(model, tokenizer, message.content, max_seq[-1], 2.0, 0.99, 99)
+                her_res = get_Shirayuki_response(model, tokenizer, messagecontent, max_seq[-1], 2.0, 0.99, 99)
                 x = '<|endoftext|>' if '<|endoftext|>' in her_res.strip() else '<|endoftext|' if '<|endoftext|' in her_res.strip() else '<|endoftext' if '<|endoftext' in her_res.strip() else '<|endoftex' if '<|endoftex' in her_res.strip() else '<|endofte' if '<|endofte' in her_res.strip() else '<|endoft' if '<|endoft' in her_res.strip() else '<|endof' if '<|endof' in her_res.strip() else '<|endo' if '<|endo' in her_res.strip() else '<|end' if '<|end' in her_res.strip() else '<|en' if '<|en' in her_res.strip() else '<|e' if '<|e' in her_res.strip() else '<|' if '<|' in her_res.strip() else '<|endoftext|>'
                 msglist = her_res.strip().split(x) 
-                await message.channel.send(f"\n<response to> {message.content[1:]}\n\nShirayuki Hime: {msglist[0]}")
+                await message.channel.send(f"\n<response to> {messagecontent[1:]}\n\nShirayuki Hime: {msglist[0]}")
         
-        
+        """Normal mode of operation to interact wuth Aisha bot, uncomment to use"""
         # print(message.content)
         # time.sleep(5)
         # her_res = get_Shirayuki_response(model, tokenizer, message.content, max_seq[-1], temperature[-1], top_p[-1], top_k[-1])
@@ -297,5 +321,5 @@ async def on_message(message):
                     
             
 
-token = 'MTM1NTIxMzE2OTkyMDA0OTM2NA.GtWEko.lW6DoZVyyfrGkZQFsDhgCjyMmfuiHIW8nzlABE'
+token = "YOUR_DISCORD_BOT_TOKEN"  # Replace with your actual Discord bot token
 client.run(token)

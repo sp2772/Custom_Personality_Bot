@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-def load_chatbot(model_path="./fine_tuned_ShirayukiV3_OPT"):
+def load_chatbot(model_path="./fine_tuned_ShirayukiV4_OPT"):
     tokenizer = AutoTokenizer.from_pretrained(model_path)
     model = AutoModelForCausalLM.from_pretrained(model_path)
     return model, tokenizer

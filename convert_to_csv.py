@@ -16,10 +16,10 @@
 #     save_to_csv()
 
 import pandas as pd
-from tsundere import chat_data  
+from new_tuples import chat_data  
 import csv
 
-def save_to_csv(output_file="conversation_dataset_ShirayukiV2.csv"):
+def save_to_csv(output_file="new_tuples.csv"):
     L = [{'guy': tup[0], 'girl': tup[1]} for tup in chat_data]
 
     # Save the initial dataset

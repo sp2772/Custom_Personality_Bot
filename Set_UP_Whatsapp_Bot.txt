@@ -1,0 +1,34 @@
+
+In the directory: C:\MyEverything\PythonProjects\Recent_projects\cnn_analysis\YouAreMe
+        python whatsapp_bot.py
+
+login to ngrok in browser:
+        https://dashboard.ngrok.com/signup
+
+After logging in to ngrok:
+        https://dashboard.ngrok.com/get-started/your-authtoken
+
+click show token and copy the bash code from the website:
+it will look something like this:
+        ngrok config add-authtoken 2NabCwQ2X8EXAMPLEabcD3rf7MNv_1A2BcD3Rf7EXAMPLE
+copy the above and paste it in a new terminal.
+
+
+now send the cmd:
+        ngrok http 5000
+
+copy the forward url
+(it will look something like: https://7f64-115-240-199-126.ngrok-free.app/bot)
+[append /bot if not present in the url]
+
+paste the url in the sandbox settings "When a message comes in" in the website:
+        https://console.twilio.com/us1/develop/sms/try-it-out/whatsapp-learn?frameUrl=%2Fconsole%2Fsms%2Fwhatsapp%2Flearn%3Fx-target-region%3Dus1
+
+login info for sandbox:
+        sp27venus@gmail.com
+        password: the mail id's password
+
+
+
+now share Shirayuki_Hime whatsapp contact (from twilio website) to your whatsapp/friend's whatsapp
+send "join standard-star" to the bot to start the chat.

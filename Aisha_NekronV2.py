@@ -1,5 +1,6 @@
-token = 'MTM1NDgxNDgxODQ1NTkxMjU1OQ.GPDkcb.KWgJx_1FB81Xxx3ItUL1U2AGBEXrNieUx5e5zs'
+token = 'YOUR_DISCORD_BOT_TOKEN'
 
+""" Aisha Nekron Discord Bot V2 Normal Version, uncommented for use"""
 # import discord
 # #import os
 # import requests
@@ -99,7 +100,7 @@ import time
 # with open("inputs_for_shirayuki.txt", 'a') as f:
 #     print("question file created/connected to!")
 
-def load_chatbot(model_path="./fine_tuned_ShirayukiOPT350"):
+def load_chatbot(model_path="./fine_tuned_ShirayukiOPT350"): #replace with your model path after training
     tokenizer = AutoTokenizer.from_pretrained(model_path)
     model = AutoModelForCausalLM.from_pretrained(model_path)
     return model, tokenizer
@@ -242,7 +243,7 @@ async def on_message(message):
     elif message.content.strip().startswith('$view'):
         await message.channel.send("My Current max gen length:"+str(max_seq[-1])+"\nTemperature:"+str(temperature[-1])+"\nTop-p:"+str(top_p[-1])+"\nTop-K:"+str(top_k[-1]))
         
-        
+    """commented out for now, uncomment if you want to interact with Shirayuki bot"""
     elif message.content.strip().startswith('$'):
         print(message.content)
         time.sleep(5)

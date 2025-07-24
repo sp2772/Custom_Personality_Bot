@@ -23,6 +23,7 @@ Below are the key files included in this repository:
 * `augment_csv_data.py`: Augments existing datasets to increase variety and improve model robustness.
 * `augmented_conversation_dataset_ShirayukiV2.csv`: Augmented dataset generated from the base conversation.
 * `chat_bot.py`: Basic chatbot runner for interacting with a trained model.
+* * `MAJOR_PROG.py`: Final discord chatbot runner with human feedbacks and Intense optimizations.
 * `conversation_dataset.csv`: Original conversation dataset used as a base.
 * `conversation_dataset_Shirayuki.csv`: Refined version of the dataset with specific personality traits.
 * `conversation_dataset_ShirayukiV2.csv`: Further refined dataset used for final fine-tuning.
@@ -64,7 +65,7 @@ Use `chat_bot.py` or `dynamic_chatbot.py` to chat with the bot interactively.
 
 ### Deploy a Personality
 
-Create a deployment script like `Shirayuki_Himeji_V2.py` to load your fine-tuned model and start a custom session.
+Create a deployment script like `MAJOR_PROG.py` or `Shirayuki_Himeji_V2.py` to load your fine-tuned model and start a custom session.
 
 ---
 

@@ -23,7 +23,7 @@ Below are the key files included in this repository:
 * `augment_csv_data.py`: Augments existing datasets to increase variety and improve model robustness.
 * `augmented_conversation_dataset_ShirayukiV2.csv`: Augmented dataset generated from the base conversation.
 * `chat_bot.py`: Basic chatbot runner for interacting with a trained model.
-* * `MAJOR_PROG.py`: Final discord chatbot runner with human feedbacks and Intense optimizations.
+*  `MAJOR_PROG.py`: Final discord chatbot runner with human feedbacks and Intense optimizations.
 * `conversation_dataset.csv`: Original conversation dataset used as a base.
 * `conversation_dataset_Shirayuki.csv`: Refined version of the dataset with specific personality traits.
 * `conversation_dataset_ShirayukiV2.csv`: Further refined dataset used for final fine-tuning.

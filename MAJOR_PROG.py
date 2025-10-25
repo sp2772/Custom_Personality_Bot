@@ -1,3 +1,5 @@
+TOKEN = "you bot token"
+
 import discord
 from discord.ext import commands, tasks
 import requests
@@ -27,7 +29,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Discord bot token and channel ID - DEFINE YOUR VALUES HERE
-TOKEN = "<bot token>"
+
 PROGRESS_CHANNEL_ID = None  # Set to your channel ID or None to disable Discord progress messages
 
 # Global variables
@@ -44,7 +46,7 @@ CSV_FILE = "new_tuples.csv" # This is the CSV file for training data
 MODELS_DIR = "models"
 STATE_FILE = "bot_state.json"
 PREV_DATA_PATH = "conversation_dataset_ShirayukiV3.csv" 
-BASE_MODEL_DIR = "./fine_tuned_ShirayukiV5_OPT"  # Base model directory
+BASE_MODEL_DIR = "fine_tuned_ShirayukiV5_OPT"  # Base model directory
 
 # Ensure directories exist
 os.makedirs(MODELS_DIR, exist_ok=True)
